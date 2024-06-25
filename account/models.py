@@ -68,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
-    department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True, blank=True)
+    department = models.ForeignKey('Department', on_delete=models.SET_NULL, null=True, blank=True, related_name='user_department')
     profile_picture = models.ImageField(upload_to='profile_pictures/', default='1.png', blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
