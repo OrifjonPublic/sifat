@@ -87,8 +87,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Product(models.Model):
     unique_id = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=255)
-    production_time = models.DurationField()
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    production_time = models.DurationField(null=True, blank=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -96,9 +96,9 @@ class Product(models.Model):
 # Bolim modeli
 class Department(models.Model):
     
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=255)
-    head = models.OneToOneField(User, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True, limit_choices_to={'role':'manager'})
+    head = models.OneToOneField(User, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -124,7 +124,7 @@ class Defect(models.Model):
 
 # Ish faoliyati modeli (bolim boshligi tomonidan kiritiladi)
 class WorkRecord(models.Model):
-    employee = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'xodim'})
+    employee = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     work_time = models.DurationField(null=True, blank=True)
@@ -144,7 +144,7 @@ def set_default_created_by(sender, instance, **kwargs):
 
 # Nuqson rekordi modeli (direktor yordamchisi tomonidan kiritiladi)
 class DefectRecord(models.Model):
-    employee = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role__name': Role.EMPLOYEE})
+    employee = models.ForeignKey(User, on_delete=models.CASCADE)
     defect = models.ForeignKey(Defect, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     created_by = models.ForeignKey(User, related_name='defect_records_created', on_delete=models.SET_NULL, null=True, blank=True)
