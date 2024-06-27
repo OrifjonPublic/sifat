@@ -43,10 +43,13 @@ class UserSerializer(serializers.ModelSerializer):
             role=validated_data.get('role', None),
             department=validated_data.get('department', None),
             first_name = validated_data.get('first_name'),
-            profile_picture = validated_data.get('profile_picture'),
+            
             gender = validated_data.get('gender'),
             last_name = validated_data.get('last_name')
-        )        
+        )   
+        if validated_data.get('profile_picture'):
+            user.profile_picture = validated_data.get('profile_picture')
+        # profile_picture =      
         user.set_password(validated_data['password'])
         user.save()
         return user
