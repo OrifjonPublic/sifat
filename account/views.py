@@ -8,6 +8,17 @@ from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 
 
+class DepartmentView(ListCreateAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+class DepartmentDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+    lookup_field = 'id'
+
+
 class CompanyView(ListCreateAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer

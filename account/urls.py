@@ -3,7 +3,8 @@ from .views import (
     CompanyView, CompanyEditView,
     RoleView, RoleEditView,
     ProductView, ProductEditView,
-    UserView, UserEditView
+    UserView, UserEditView,
+    DepartmentDetailView, DepartmentView
 )
 
 urlpatterns = [
@@ -15,5 +16,7 @@ urlpatterns = [
     path('product/<int:pk>/', ProductEditView.as_view(), name='product_edit'),
     path('', UserView.as_view(), name='user'),
     path('<int:pk>/', UserEditView.as_view(), name='user_edit'),
+    path('department/', DepartmentView.as_view(), name='department'),
+    path('department/<int:pk>/', DepartmentDetailView.as_view(), name='department_detail'),
 
 ]
