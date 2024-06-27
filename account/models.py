@@ -102,14 +102,6 @@ class Department(models.Model):
     def __str__(self):
         return self.name
     
-    def save(self, *args, **kwargs):
-        if not self.head:
-            self.head = fake_user()
-        super().save(*args, **kwargs)
-
-    def set_user_(self, *args, **kwargs):
-        self.head = fake_user()
-        super().save(*args, **kwargs)
 
 
 # Nuqson modeli
