@@ -4,7 +4,8 @@ from .views import (
     RoleView, RoleEditView,
     ProductView, ProductEditView,
     UserView, UserEditView,
-    DepartmentDetailView, DepartmentView
+    DepartmentDetailView, DepartmentView,
+    DefectView, DefectDetailView
 )
 
 urlpatterns = [
@@ -18,5 +19,7 @@ urlpatterns = [
     path('<int:id>/', UserEditView.as_view(), name='user_edit'),
     path('department/', DepartmentView.as_view(), name='department'),
     path('department/<int:id>/', DepartmentDetailView.as_view(), name='department_detail'),
+    path('defect/', DefectView.as_view(), name='defect'),
+    path('defect/<int:id>/', DefectDetailView.as_view(), name='defect_detail'),
 
 ]

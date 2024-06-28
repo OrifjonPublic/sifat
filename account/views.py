@@ -8,6 +8,25 @@ from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 
 
+# class WorkRecordView(ListCreateAPIView):
+#     queryset = WorkRecord.objects.all()
+#     serializer_class = WorkRecordSerializer
+
+#     def get_context_serializer(self):
+
+
+
+class DefectView(ListCreateAPIView):
+    queryset = Defect.objects.all()
+    serializer_class = DefectSerializer
+
+
+class DefectDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Defect.objects.all()
+    serializer_class = DefectSerializer
+    lookup_field = 'id'
+
+
 class DepartmentView(ListCreateAPIView):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
