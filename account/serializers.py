@@ -74,7 +74,7 @@ class MyOwnSerializer(TokenObtainPairSerializer):
         if user.role:
             token['role'] = user.role.name
         token['profile_picture'] = user.profile_picture.url
-        if token.department:
+        if user.department:
             token['department'] = user.department.name
         token['id'] = user.id
         return token
