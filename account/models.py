@@ -136,7 +136,8 @@ def set_default_created_by(sender, instance, **kwargs):
 # Nuqson rekordi modeli (direktor yordamchisi tomonidan kiritiladi)
 class DefectRecord(models.Model):
     employee = models.ForeignKey(User, on_delete=models.CASCADE)
-    defect = models.ForeignKey(Defect, on_delete=models.CASCADE)
+    defect = models.ForeignKey(Defect, on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=0)
     created_by = models.ForeignKey(User, related_name='defect_records_created', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

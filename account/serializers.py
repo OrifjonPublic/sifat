@@ -135,7 +135,7 @@ class WorkRecordSerializer(serializers.ModelSerializer):
 class DefectRecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = DefectRecord
-        fields = ['employee', 'defect', 'quantity']
+        fields = ['employee', 'defect', 'quantity', 'product']
     def __init__(self, *args, **kwargs):
         super(DefectRecordSerializer, self).__init__(*args, **kwargs)
         self.fields['employee'].queryset = User.objects.filter(role__name='xodim')
@@ -144,7 +144,8 @@ class DefectRecordSerializer(serializers.ModelSerializer):
         defect_record = DefectRecord.objects.create(
             employee=validated_data.get('employee'),
             defect=validated_data.get('defect'),
-            quantity=validated_data.get('quantity', 0)
+            quantity=validated_data.get('quantity', 0),
+            product=validated_data.get('product', 0),
         )
         defect_record.created_by = self.context.get('request').user
         defect_record.save()
@@ -155,6 +156,7 @@ class DefectRecordSerializer(serializers.ModelSerializer):
         instance.defect = validated_data.get('defect', instance.defect)
         instance.quantity = validated_data.get('quantity', instance.quantity)
         instance.created_by = validated_data.get('created_by', instance.created_by)
+        instance.product = validated_data.get('product', instance.product)
         instance.save()
         return instance
     
