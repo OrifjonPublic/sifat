@@ -6,6 +6,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from .models import *
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FileUploadParser, JSONParser
 
 
 class WorkRecordView(ListCreateAPIView):
@@ -32,10 +33,12 @@ class WorkRecordDetailView(RetrieveUpdateDestroyAPIView):
 class DefectRecordView(ListCreateAPIView):
     queryset = DefectRecord.objects.all()
     serializer_class = DefectRecordSerializer
+    parser_classes = [MultiPartParser, FileUploadParser, JSONParser]
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context['request'] = self.request
+        context['rasmlar'] = self.request.data.getlist('images')
         return context
 
 

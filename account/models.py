@@ -133,6 +133,10 @@ def set_default_created_by(sender, instance, **kwargs):
     WorkRecord.objects.filter(created_by=instance).update(created_by=default_user)
 
 
+class DefectImages(models.Model):
+    image = models.ImageField(upload_to='defect_images/')
+
+
 # Nuqson rekordi modeli (direktor yordamchisi tomonidan kiritiladi)
 class DefectRecord(models.Model):
     employee = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -142,6 +146,7 @@ class DefectRecord(models.Model):
     created_by = models.ForeignKey(User, related_name='defect_records_created', on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    images = models.ManyToManyField(DefectImages)
 
     def __str__(self):
         return f'{self.employee} - {self.defect} - {self.quantity}'

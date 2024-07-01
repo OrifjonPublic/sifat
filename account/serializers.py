@@ -77,6 +77,7 @@ class MyOwnSerializer(TokenObtainPairSerializer):
         if user.department:
             token['department'] = user.department.name
         token['id'] = user.id
+        token['gender'] = user.gender
         return token
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -88,6 +89,7 @@ class MyOwnSerializer(TokenObtainPairSerializer):
         if self.user.department:
             data['department'] = self.user.department.name
         data['profile_picture'] = self.user.profile_picture.url       
+        data['gender'] = self.user.gender
         return data
     
 
@@ -148,6 +150,15 @@ class DefectRecordSerializer(serializers.ModelSerializer):
             product=validated_data.get('product', 0),
         )
         defect_record.created_by = self.context.get('request').user
+        rasmlarimiz = self.context.get('rasmlar', [])
+        for i in rasmlarimiz:
+            try:
+                rasm = DefectImages.objects.create(image=i)
+                defect_record.images.add(rasm)
+            except Exception as e:
+                # Handle any image creation/addition errors here
+                print(f"Error adding image: {e}")
+
         defect_record.save()
         return defect_record
     
