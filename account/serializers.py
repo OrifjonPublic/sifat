@@ -75,7 +75,7 @@ class MyOwnSerializer(TokenObtainPairSerializer):
             token['role'] = user.role.name
         token['profile_picture'] = user.profile_picture.url
         if token.department:
-            token['department'] = token.department.name
+            token['department'] = user.department.name
         token['id'] = user.id
         return token
     def validate(self, attrs):
